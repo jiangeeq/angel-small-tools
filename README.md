@@ -4,8 +4,8 @@
 <div style="height:256px; width:256px; text-align: center;">
 </div>
  <a href="http://spring.io/projects/spring-boot">
-            <img src="https://img.shields.io/badge/spring--boot-2.2.5.RELEASE-green.svg" alt="spring-boot">
-       </a>
+      <img src="https://img.shields.io/badge/spring--boot-2.2.5.RELEASE-green.svg" alt="spring-boot">
+ </a>
 </div>
 
 ### 系统介绍
@@ -27,11 +27,7 @@ angel-small-tools基于Spring Boot 、java 实现一套工具集的整合，包�
 * 一键配置文件存储服务商  
 * 可扩展添加文件存储服务商  
 * 支持禁用指定存储服务商   
-* 支持动态限流调用次数
-* 大文件支持断点续传
-* 多文件同时上传
-* 项目代码结构精简
-* 一次打包，到处运行
+
 
 
 ### 帮助文档
