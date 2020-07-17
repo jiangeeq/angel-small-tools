@@ -250,6 +250,9 @@ public class JsonSensitive {
 
 
     private static String dealSensitivity(String mapKey, Object mapValue, String encrypt) {
+        if (Objects.isNull(mapValue) || StringUtils.isBlank(mapValue.toString())) {
+            return "";
+        }
         String valueType = mapValue.getClass().getSimpleName();
         boolean isJavaType = JAVA_BASIC_TYPE.contains(valueType) || JAVA_PACKAGE_TYPE.contains(valueType);
         String value = isJavaType ? mapValue.toString() : toJson(mapValue);

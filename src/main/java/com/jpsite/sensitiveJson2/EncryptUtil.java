@@ -18,6 +18,7 @@ public class EncryptUtil {
     public static final String HmacSHA1 = "HmacSHA1";
     public static final String DES = "DES";
     public static final String AES = "AES";
+    public static final String SIGN_ALGORITHMS = "SHA1PRNG";
 
     /**
      * 编码格式；默认使用uft-8
@@ -109,14 +110,14 @@ public class EncryptUtil {
     private String keyGeneratorES(String res, String algorithm, String key, int keysize, boolean isEncode) {
         try {
             KeyGenerator kg = KeyGenerator.getInstance(algorithm);
+            SecureRandom random = SecureRandom.getInstance(SIGN_ALGORITHMS);
+            random.setSeed(key.getBytes(charset));
             if (keysize == 0) {
-                byte[] keyBytes = charset == null ? key.getBytes() : key.getBytes(charset);
-                kg.init(new SecureRandom(keyBytes));
+                kg.init(random);
             } else if (key == null) {
                 kg.init(keysize);
             } else {
-                byte[] keyBytes = charset == null ? key.getBytes() : key.getBytes(charset);
-                kg.init(keysize, new SecureRandom(keyBytes));
+                kg.init(keysize, random);
             }
             SecretKey sk = kg.generateKey();
             SecretKeySpec sks = new SecretKeySpec(sk.getEncoded(), algorithm);
