@@ -55,7 +55,6 @@ public class SignatureUtils {
         }
         val md5DigestAsHex = DigestUtils.md5DigestAsHex(paramEqValue(map, salt).getBytes());
         return upperCase ? md5DigestAsHex.toUpperCase() : md5DigestAsHex;
-
     }
 
     /**
@@ -79,13 +78,34 @@ public class SignatureUtils {
     }
 
     /**
+     * 把map转化为param+value+param+value的格式
+     * +表示字符串连接运算
+     *
+     * @return
+     */
+    public static String paramAppendValue(Map<String, Object> map, String salt) {
+        StringBuilder builder = new StringBuilder();
+        map.keySet().forEach(key -> {
+            if (!Objects.isNull(map.get(key)) && !Strings.isNullOrEmpty(map.get(key).toString())) {
+                builder.append(key).append(map.get(key));
+            }
+        });
+        if (!Strings.isNullOrEmpty(salt)) {
+            builder.append(salt);
+        }
+        val result = builder.toString();
+        log.debug("生成的paramValue为: [{}]", result);
+        return result;
+    }
+
+    /**
      * 将Object对象里面的属性和值转化成Map对象，并按字段升序排序
      * 如果字段是自定义对象类型，则直接把值转 json 串
      *
      * @param obj
      * @return
      */
-    private static Map<String, Object> objectToMap(Object obj) {
+    public static Map<String, Object> objectToMap(Object obj) {
         return Arrays.stream(obj.getClass().getDeclaredFields()).sorted(Comparator.comparing(Field::getName))
                 .peek(field -> field.setAccessible(true)).collect(
                         Collectors.toMap(Field::getName, field -> {

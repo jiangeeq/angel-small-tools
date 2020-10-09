@@ -1,7 +1,6 @@
 package com.jpsite.rateLimiter;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.jpsite.upload.config.NameThreadFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;

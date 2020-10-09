@@ -1,4 +1,4 @@
-package com.jpsite.upload.config;
+package com.jpsite.rateLimiter;
 
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
