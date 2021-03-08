@@ -26,7 +26,7 @@ public class SensitiveSerializerModifier extends BeanSerializerModifier {
         final Annotations classAnnotations = beanDesc.getClassAnnotations();
 
         if (Objects.nonNull(classAnnotations.get(JsonEncrypt.class))) {
-            encrypt = "zhaocaiwai";
+            encrypt =  classAnnotations.get(JsonEncrypt.class).encrypt();
         }
         // 循环所有的beanPropertyWriter
         for (BeanPropertyWriter writer : beanProperties) {

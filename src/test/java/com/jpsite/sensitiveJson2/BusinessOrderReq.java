@@ -6,7 +6,7 @@ import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain = true)
-@JsonEncrypt
+@JsonEncrypt(encrypt = "mima")
 public class BusinessOrderReq {
 
     private String accountName;
