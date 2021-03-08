@@ -1,6 +1,8 @@
 package com.jpsite.threadAsync;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -29,6 +31,16 @@ import java.util.function.Supplier;
 @Component
 public class AsyncThreadUtils {
     private static ConcurrentHashMap<String, ExecutorService> threadPoolMap = new ConcurrentHashMap<>();
+
+    @AllArgsConstructor
+    @Getter
+    public enum ThreadPoolTypeEnum {
+        baseIoDenseThreadPool("baseIoDenseThreadPool", "简单io密集型"),
+        baseCpuDenseThreadPool("baseCpuDenseThreadPool", "简单cpu密集型");
+
+        private String type;
+        private String desc;
+    }
 
     @Autowired
     private ApplicationContext applicationContext;

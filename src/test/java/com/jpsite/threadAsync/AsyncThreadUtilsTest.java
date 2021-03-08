@@ -23,7 +23,7 @@ public class AsyncThreadUtilsTest {
 
     @Test
     public void testQueue() {
-        final Future<String> future = AsyncThreadUtils.queue(() -> task(), "baseCpuDenseThreadPool");
+        final Future<String> future = AsyncThreadUtils.queue(() -> task(), AsyncThreadUtils.ThreadPoolTypeEnum.baseCpuDenseThreadPool.getType());
         final String s;
         try {
             s = future.get(1, TimeUnit.SECONDS);
