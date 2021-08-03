@@ -180,6 +180,7 @@ public class JsonSensitive {
                         try {
                             decodeJson = parseObjectNode(objectMapperSensitivity.writeValueAsString(x));
                         } catch (JsonProcessingException e) {
+                            log.error("writeValueAsString 解析失败", e);
                             e.printStackTrace();
                         }
                         tempNode.put(x.getKey(), Objects.isNull(decodeJson) ? "" : decodeJson.get(x.getKey()).asText());
@@ -203,7 +204,7 @@ public class JsonSensitive {
             ObjectNode jsonNode = (ObjectNode) objectMapperSensitivity.readTree(json);
             jsonNode.fields().forEachRemaining(node -> {
                 JsonNode nodeValue = node.getValue();
-                // 正则判断
+                // 正则判断json string
                 String jsonRegexp = "\\{[^\\}].*\\}";
                 Pattern jsonPattern = Pattern.compile(jsonRegexp);
                 boolean condition1 = jsonPattern.matcher(nodeValue.toString()).matches();
@@ -223,6 +224,7 @@ public class JsonSensitive {
                             try {
                                 decodeJson = parseObjectNode(objectMapperSensitivity.writeValueAsString(x));
                             } catch (JsonProcessingException e) {
+                                log.error("writeValueAsString 解析失败", e);
                                 e.printStackTrace();
                             }
                             tempNode.put(x.getKey(), Objects.isNull(decodeJson) ? "" : decodeJson.get(x.getKey()).asText());
