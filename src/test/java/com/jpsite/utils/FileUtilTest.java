@@ -6,6 +6,7 @@ import cn.hutool.core.io.file.FileReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.InetAddress;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 import java.util.Objects;
@@ -21,11 +22,14 @@ import java.util.Objects;
 public class FileUtilTest {
     //    @Test
     public static void test1() throws Exception {
-        final File file = FileUtil.touch(new File("./lock.txt"));
+        InetAddress ia = InetAddress.getLocalHost();
+        String host = ia.getHostName();//获取计算机主机名
+        String IP= ia.getHostAddress();//获取计算机IP
+        final File file = FileUtil.touch(new File("/data/share/b.txt"));
         FileAppender appender = new FileAppender(file, 1, true);
-        appender.append("123");
-        appender.append("abc");
-        appender.append("xyz");
+        appender.append("123"+IP);
+        appender.append("abc"+IP);
+        appender.append("xyz"+IP);
         appender.flush();
         FileReader fileReader = new FileReader(file);
         String result = fileReader.readString();
@@ -72,13 +76,13 @@ public class FileUtilTest {
                 e.printStackTrace();
             }
         }).start();
-        Thread.sleep(3000);
-        new Thread(() -> {
-            try {
-                test2();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+//        Thread.sleep(3000);
+//        new Thread(() -> {
+//            try {
+//                test2();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }).start();
     }
 }
