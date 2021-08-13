@@ -106,17 +106,17 @@ public class RateLimitFilter implements EnvironmentAware, InitializingBean, Disp
             if (!validated) {
                 logger.debug("前置检查不通过, rateLimit: {}", rateLimit);
                 Method fallbackMethod = getFallbackMethod(context, rateLimit);
-                return invokeFallbackMethod(fallbackMethod, fallbackTarget, fallbackArgs);
+//                return invokeFallbackMethod(fallbackMethod, fallbackTarget, fallbackArgs);
             }
         }
 
         for (RateLimit rateLimit : rateLimits) {
             LimitProcessor limitProcessor = limitProcessorFactory.getInstance(serverInvocationContext, rateLimit);
-            boolean validated = limitProcessor.postProcess(response);
+            boolean validated = limitProcessor.postProcess(null);
             if (!validated) {
                 logger.debug("后置检查不通过, rateLimit: {}", rateLimit);
                 Method fallbackMethod = getFallbackMethod(context, rateLimit);
-                return invokeFallbackMethod(fallbackMethod, fallbackTarget, fallbackArgs);
+//                return invokeFallbackMethod(fallbackMethod, fallbackTarget, fallbackArgs);
             }
         }
         chain.doFilter(req,resp);

@@ -6,6 +6,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +14,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.util.Objects;
 
 /**
@@ -200,5 +205,36 @@ public class FileUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 读取文件内容
+     * @param file
+     * @return
+     */
+    public static String getFileContent(File file) {
+        String line = "";
+        StringBuilder content = new StringBuilder();
+        try {
+            final BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            while ((line = bf.readLine()) != null) {
+                content.append(line);
+            }
+        } catch (Exception e) {
+            content = new StringBuilder("ERROR");
+        }
+        return content.toString();
+    }
+
+    /**
+     * 试图获取文件独占锁
+     * @param file
+     * @return 如果获取不到锁，则返回null。而不阻塞当前线程，等待获取锁。
+     * @throws IOException
+     */
+    public static FileLock getFileLock(File file) throws IOException {
+        final RandomAccessFile rw = new RandomAccessFile(file, "rw");
+        final FileChannel channel = rw.getChannel();
+        return channel.tryLock();
     }
 }
